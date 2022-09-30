@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
    $user = User::first();
-    dispatch(new ReconileAccount($user));
+    //dispatch(new ReconileAccount($user));
+
+    ReconileAccount::dispatch($user)
 
     return 'finished';
     //return view('welcome');
