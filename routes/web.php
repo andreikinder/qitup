@@ -1,5 +1,7 @@
 <?php
 
+use App\Jobs\ReconileAccount;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    dispatch(function (){
-       logger('I have to tell you abot the future');
-    })->delay(now()->addMinute(1));
+   $user = User::first();
+    dispatch(new ReconileAccount($user));
+
     return 'finished';
     //return view('welcome');
 });
