@@ -17,10 +17,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-   $user = User::first();
+    $pipeline = app(Illuminate\Pipeline\Pipeline::class);
+
+    $pipeline->send('hello freaking wordl freaking')
+        ->through([
+            function ($string, $next){
+                $string =ucwords($string);
+                return $next($string);
+            },
+            function ($string, $next){
+                $string = str_ireplace('freaking', '', $string);
+                return $next($string);
+            },
+            ReconileAccount::class
+        ])
+        ->then(function ($string){
+        dump($string);
+    });
+
+   //$user = User::first();
     //dispatch(new ReconileAccount($user));
 
-    ReconileAccount::dispatch($user)
+    //ReconileAccount::dispatch($user)->onQueue('high');
 
     return 'finished';
     //return view('welcome');

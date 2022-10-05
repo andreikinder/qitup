@@ -35,8 +35,10 @@ class ReconileAccount implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle($string, $next)
     {
-        logger('fdsf here it is'. $this->user->name);
+        return $next('something new');
+       // throw new \Exception('Whoops !');
+     //   logger('fdsf here it is'. $this->user->name);
     }
 }
